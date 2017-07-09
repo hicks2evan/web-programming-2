@@ -13,10 +13,15 @@ class lab4 {
 
   asyncFileRead(filename, callback) {
     var fs = require('fs');
-
-    fs.open(filename, 'r+', function(data) {
+    fs.readFile(filename, function(err, data) {
+       if(err) {
+          console.log(err);
+       }
       return callback(data);
     });
+    // fs.open(filename, 'r+', function(data) {
+    //   return callback(data);
+    // });
   }
 
   compressFileStream(fileIn, fileOut) {
@@ -49,7 +54,7 @@ class lab4 {
     var fs = require('fs');
 
     //var arr = [];
-    fs.readdir(directory, function(err,files) {
+    fs.readdir(directory, function(err, files) {
       if(err) {
         console.log(err);
       }

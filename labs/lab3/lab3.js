@@ -47,5 +47,7 @@ O God! a beast that wants discourse of reason,
    testSortWithArrowFunction(array) {
       return array.sort((a, b) => b - a);
    }
+
+
 }
 export {lab3}
