@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import User from '/Users/Evan/Documents/GIT/COMP-3705/server/api/users/users.model.js';
+import User from '../../users/users.model';
 
 let Schema = mongoose.Schema;
 

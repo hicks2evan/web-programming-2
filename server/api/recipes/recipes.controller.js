@@ -67,7 +67,6 @@ export function show(req, res) {
 export function create(req, res) {
   //let ingredients = req.body.ingredients;
   var recipe = req.body;
-  recipe.reviews = Reviews.find;
   var ingredientsArray = [];
   var counter = 1;
   req.body.ingredients.forEach(function(anIngredient) {
