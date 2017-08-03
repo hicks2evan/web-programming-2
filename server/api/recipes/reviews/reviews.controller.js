@@ -2,6 +2,7 @@
 
 import {Review} from './reviews.model';
 import {User} from '/Users/Evan/Documents/GIT/COMP-3705/server/api/users/users.model';
+import {Recipe} from '/Users/Evan/Documents/GIT/COMP-3705/server/api/recipes/recipes.model';
 
 
 // Find all Reviews
@@ -64,12 +65,21 @@ export function create(req, res) {
         review.author = u;
         Review.create(review)
             .then(function(createdReview) {
-              res.status(201);
-              res.json(createdReview);
+              var newReview = createdReview;
+              Recipe.findById(req.params.id)
+              .then(function(foundRecipe) {
+                foundRecipe.reviews.push(newReview);
+                foundRecipe.save();
+                return newReview;
+              })
+               .then(function(returnReview) {
+                 res.status(201);
+                 res.json(returnReview);
+               });
             })
             .catch(function(err) {
               res.status(400);
-              res.send(err);
+              res.send(err.toString());
             });
       });
 }

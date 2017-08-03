@@ -13,7 +13,8 @@ let recipeSchema = Schema({
   prepTime: {type: Number, required: true},
   cookTime: {type: Number, required: true},
   directions: {type: [String], required: true},
-  ingredients: {type: [ingredientSchema], required: true}
+  ingredients: {type: [ingredientSchema], required: true},
+  reviews: {type: [Schema.ObjectId], ref: 'Review', required: false}
 });
 
 let Ingredient = mongoose.model('Ingredient', ingredientSchema);

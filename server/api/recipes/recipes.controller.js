@@ -1,12 +1,20 @@
 'use strict';
 
 import {Recipe, Ingredient} from './recipes.model';
+import {Review} from './reviews/reviews.model';
 
 
 // Find all Recipes
 export function index(req, res) {
   Recipe.find()
-    .populate('ingredients.ingredient')
+     .populate('ingredients.ingredient')
+     .populate({
+       path: 'reviews',
+       model: Review,
+       populate: [{
+         path: 'reviews.review'
+       }]
+     })
     .exec()
     // This then method will only be called if the query was successful, so no need to error check!
     .then(function(recipes) {
@@ -25,7 +33,14 @@ export function index(req, res) {
 // Find details for one recipe
 export function show(req, res) {
   Recipe.findById(req.params.id)
-    .populate('ingredients.ingredient')
+     .populate('ingredients.ingredient')
+     .populate({
+       path: 'reviews',
+       model: Review,
+       populate: [{
+         path: 'reviews.review'
+       }]
+     })
     .exec()
     .then(function(existingRecipe) {
       /*
@@ -52,7 +67,7 @@ export function show(req, res) {
 export function create(req, res) {
   //let ingredients = req.body.ingredients;
   var recipe = req.body;
-  recipe.reviews = Reviews.find
+  recipe.reviews = Reviews.find;
   var ingredientsArray = [];
   var counter = 1;
   req.body.ingredients.forEach(function(anIngredient) {
@@ -142,11 +157,19 @@ export function update(req, res) {
 export function destroy(req, res) {
   Recipe.findById(req.params.id)
     .populate('ingredients.ingredient')
+     .populate({
+       path: 'reviews',
+       model: Review,
+       populate: [{
+         path: 'reviews.review'
+       }]
+     })
     .exec()
     .then(function(existingRecipe) {
       if(existingRecipe) {
         return Promise.all([
           existingRecipe.ingredients.remove(),
+          existingRecipe.reviews.remove(),
           existingRecipe.remove()
         ]);
       } else {
