@@ -78,7 +78,7 @@ export function create(req, res) {
             Recipe.create(recipe)
                  .then(function(createdRecipe) {
                    res.status(201);
-                   res.json(createdRecipe);
+                   res.json(createdRecipe);gu
                  })
                  .catch(function(err) {
                    res.status(400);
