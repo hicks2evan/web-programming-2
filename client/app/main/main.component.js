@@ -4,9 +4,10 @@ import routing from './main.routes';
 
 export class MainController {
    /*@ngInject*/
-  constructor($http, User) {
+  constructor($http, User, $uibModal) {
     this.$http = $http;
     this.User = User;
+    this.$uibModal = $uibModal;
     this.setData();
     this.getUserData();
   }
@@ -19,28 +20,23 @@ export class MainController {
   getUserData() {
     this.User.getAllUsers()
          .then(response => {
-           this.users = response.data;
+           this.users = response;
          })
          .catch(error => {
            console.error(error);
          });
   }
 
-  $onInit() {
+  updateUser(user) {
+     //console.log(user);
+    this.$uibModal.open({
+      template: require('../../components/updateUserModal/updateUserModal.html'),
+      controller: 'updateUserModalController as updateUserModalController',
+      resolve: {
+        user: () => user
+      }
+    });
   }
-}
-
-export function UserService($http) {
-  'ngInject';
-  var User = {
-    getAllUsers() {
-      return $http.get('/api/users/');
-    },
-    getUserById(id) {
-      return $http.get('/api/users/' + id);
-    }
-  };
-  return User;
 }
 
 export function SquareFilter() {
@@ -58,6 +54,5 @@ export default angular.module('comp3705App.main', [ngRoute])
     controllerAs: 'mainController'
 
   })
-   .service('User', UserService)
    .filter('Square', SquareFilter)
   .name;

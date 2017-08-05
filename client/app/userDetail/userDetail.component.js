@@ -1,9 +1,9 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
-import routing from './user.routes';
+import routing from './userDetail.routes';
 import User from '../main/main.component';
 
-export class UserController {
+export class UserDetailController {
    /*@ngInject*/
   constructor($http, $routeParams) {
     this.$http = $http;
@@ -15,12 +15,12 @@ export class UserController {
   }
 }
 
-export default angular.module('comp3705App.user', [ngRoute])
+export default angular.module('comp3705App.userDetail', [ngRoute])
   .config(routing)
-  .component('user', {
-    template: require('./user.html'),
-    controller: UserController,
-    controllerAs: 'userController'
+  .component('userDetail', {
+    template: require('./userDetail.html'),
+    controller: UserDetailController,
+    controllerAs: 'userDetailController'
 
   })
   .name;

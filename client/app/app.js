@@ -15,13 +15,15 @@ import {
 } from './app.config';
 
 import main from './main/main.component';
-import user from './user/user.component';
+import userDetail from './userDetail/userDetail.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
+import user from '../components/userService/user.module';
+import updateUserModal from '../components/updateUserModal/updateuserModal.controller';
 
 import './app.css';
 
-angular.module('comp3705App', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap, main, user, constants, util
+angular.module('comp3705App', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap, main, userDetail, user, updateUserModal, constants, util
 ])
   .config(routeConfig);
 
