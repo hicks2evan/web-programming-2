@@ -19,11 +19,12 @@ import userDetail from './userDetail/userDetail.component';
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import user from '../components/userService/user.module';
-import updateUserModal from '../components/updateUserModal/updateuserModal.controller';
+import updateUserModal from '../components/updateUserModal/updateUserModal.controller';
+import createUserModal from '../components/createUserModal/createUserModal.controller';
 
 import './app.css';
 
-angular.module('comp3705App', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap, main, userDetail, user, updateUserModal, constants, util
+angular.module('comp3705App', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap, main, userDetail, user, updateUserModal, createUserModal, constants, util
 ])
   .config(routeConfig);
 

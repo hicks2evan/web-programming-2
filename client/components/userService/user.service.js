@@ -15,7 +15,10 @@ export function UserService($resource) {
           update: { method: 'PUT' }
         });
       return updateResource.update({ id: user._id }, user);
-    }
+    },
+    createUser(user) {
+      return $resource('/api/users').save({user}).$promise;
+    },
   };
   return User;
 }
