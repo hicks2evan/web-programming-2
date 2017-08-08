@@ -1,8 +1,8 @@
 'use strict';
 
 import {Review} from './reviews.model';
-import {User} from '/Users/Evan/Documents/GIT/COMP-3705/server/api/users/users.model';
-import {Recipe} from '/Users/Evan/Documents/GIT/COMP-3705/server/api/recipes/recipes.model';
+import {User} from '../../users/users.model';
+import {Recipe} from '../recipes.model';
 
 
 // Find all Reviews
