@@ -8,24 +8,24 @@ export class MainController {
     this.$http = $http;
     this.User = User;
     this.$uibModal = $uibModal;
-    // this.setData();
-    // this.getUserData();
+    this.setData();
+    this.getUserData();
   }
 
-  // setData() {
-  //   this.values = ['first', 'second', 'third'];
-  //   this.valueToSquare = 4;
-  // }
-  //
-  // getUserData() {
-  //   this.User.getAllUsers()
-  //        .then(response => {
-  //          this.users = response;
-  //        })
-  //        .catch(error => {
-  //          console.error(error);
-  //        });
-  // }
+  setData() {
+    this.values = ['first', 'second', 'third'];
+    this.valueToSquare = 4;
+  }
+
+  getUserData() {
+    this.User.getAllUsers()
+         .then(response => {
+           this.users = response;
+         })
+         .catch(error => {
+           console.error(error);
+         });
+  }
 
   updateUser(user) {
      //console.log(user);
@@ -39,7 +39,6 @@ export class MainController {
   }
 
   createUser(user) {
-    console.log(user);
     this.$uibModal.open({
       template: require('../../components/createUserModal/createUserModal.html'),
       controller: 'createUserModalController as createUserModalController',

@@ -15,6 +15,7 @@ export class CreateUserModalController {
   submitForm() {
     //console.log("something");
     this.User.createUser(this.user);
+    this.$uibModalInstance.dismiss('submit');git
   }
 }
 

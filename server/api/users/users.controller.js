@@ -105,6 +105,7 @@ export function create(req, res) {
     })
     // An error was encountered during either the save of the address or the save of the user
     .catch(function(err) {
+      console.log(err);
       res.status(400);
       res.send(err);
     });
