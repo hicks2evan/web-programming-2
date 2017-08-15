@@ -2,7 +2,6 @@
 
 import {User} from './users.model';
 
-// Find all Users
 export function index(req, res) {
   User.find()
     .exec()
@@ -11,108 +10,104 @@ export function index(req, res) {
     })
     .catch(function(err) {
       res.status(500);
-      res.send(err);
+      console.error(err);
+      res.send(err.toString());
     });
 }
 
-// Find details for one user
 export function show(req, res) {
   User.findById(req.params.id)
     .exec()
     .then(function(existingUser) {
       if(existingUser) {
-        // User was found by Id
         res.status(200);
         res.json(existingUser);
       } else {
-        // User was not found
-        res.status(404);
-        res.json({message: 'Not Found'});
+        return Promise.reject(new Error('User not found'));
       }
     })
     .catch(function(err) {
-      res.status(400);
-      res.send(err);
+      if(err.message.toLowerCase().includes('not found')) {
+        res.status(404);
+        res.json({message: err.message});
+      } else {
+        res.status(400);
+        console.error(err);
+        res.send(err.toString());
+      }
     });
 }
 
-// Create a new user
 export function create(req, res) {
   let user = req.body;
   User.create(user)
-     .then(function(createdUser) {
-       res.status(201);
-       res.json(createdUser);
-     })
-    // An error was encountered during either the save of the address or the save of the user
+    .then(function(createdUser) {
+      res.status(201);
+      res.json(createdUser);
+    })
     .catch(function(err) {
       res.status(400);
-      res.send(err);
+      console.error(err);
+      res.send(err.toString());
     });
 }
 
-// Update a user
 export function update(req, res) {
-  // This value will be set by the successful update of the user so that it can be returned
-  var updatedUser;
-  // Start by trying to find the user by its id
   User.findById(req.params.id)
     .exec()
-    // Update user and address
     .then(function(existingUser) {
-      // If user exists, update all fields of the object
       if(existingUser) {
+        // Don't let users update their username
+        existingUser.name.firstName = req.body.name.firstName;
+        existingUser.name.lastName = req.body.name.lastName;
         existingUser.email = req.body.email;
-        existingUser.username = req.body.username;
-        existingUser.fullName.firstName = req.body.fullName.firstName;
-        existingUser.fullName.lastName = req.body.fullName.lastName;
-        // Set externally declared updatedUser so that later promise can return it
-        updatedUser = existingUser;
-        return Promise.all([
-          existingUser.save()
-        ]);
+        return existingUser.increment().save();
       } else {
-        // User was not found
-        return null;
+        return Promise.reject(new Error('User not found'));
       }
     })
-    // This .then will be called after the Promise.all resolves, or be called with null if the user was not found
-    .then(function(savedObjects) {
-      // savedObjects should be defined if Promise.all was invoked (user was found)
-      if(savedObjects) {
-        res.status(200);
-        res.json(updatedUser);
-      } else {
-        // User was not found
-        res.status(404);
-        res.json({message: 'Not Found'});
-      }
+    .then(function(updateStatus) {
+      // update method does not return updated object, query for it here to return from API
+      return User.findById(req.params.id);
     })
-    // Error encountered during the save of the user or address
+    .then(function(savedUser) {
+      res.status(200);
+      res.json(savedUser);
+    })
     .catch(function(err) {
-      res.status(400);
-      res.send(err);
+      console.log(err);
+      if(err.message.toLowerCase().includes('not found')) {
+        res.status(404);
+        res.json({message: err.message});
+      } else {
+        res.status(400);
+        console.error(err);
+        res.send(err.toString());
+      }
     });
 }
 
-// Remove a user
 export function destroy(req, res) {
   User.findById(req.params.id)
     .exec()
     .then(function(existingUser) {
       if(existingUser) {
-        existingUser.remove()
-          // Delete was successful
-             .then(function() {
-               res.status(204).send();
-             })
-             // Address or user delete failed
-             .catch(function(err) {
-               res.status(400);
-               res.send(err);
-             });
+        return existingUser.remove();
       } else {
-        return null;
+        return Promise.reject(new Error('User not found'));
+      }
+    })
+    .then(function() {
+      res.status(204).send();
+    })
+    .catch(function(err) {
+      if(err.message.toLowerCase().includes('not found')) {
+        res.status(404);
+        res.json({message: err.message});
+      } else {
+        res.status(400);
+        console.error(err);
+        res.send(err.toString());
       }
     });
 }

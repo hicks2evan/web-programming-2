@@ -1,63 +1,20 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
-import routing from './main.routes';
+import routing from './home.routes';
 
-export class MainController {
+export class HomeController {
    /*@ngInject*/
-  constructor($http, User) {
-    this.$http = $http;
-    this.User = User;
-    this.setData();
-    this.getUserData();
-  }
+  constructor() {
 
-  setData() {
-    this.values = ['first', 'second', 'third'];
-    this.valueToSquare = 4;
-  }
-
-  getUserData() {
-    this.User.getAllUsers()
-         .then(response => {
-           this.users = response.data;
-         })
-         .catch(error => {
-           console.error(error);
-         });
-  }
-
-  $onInit() {
   }
 }
 
-export function UserService($http) {
-  'ngInject';
-  var User = {
-    getAllUsers() {
-      return $http.get('/api/users/');
-    },
-    getUserById(id) {
-      return $http.get('/api/users/' + id);
-    }
-  };
-  return User;
-}
-
-export function SquareFilter() {
-  var squareFunction = function(value) {
-    return value * value;
-  };
-  return squareFunction;
-}
-
-export default angular.module('comp3705App.main', [ngRoute])
+export default angular.module('comp3705App.home', [ngRoute])
   .config(routing)
-  .component('main', {
-    template: require('./main.html'),
-    controller: MainController,
-    controllerAs: 'mainController'
+  .component('home', {
+    template: require('./home.html'),
+    controller: HomeController,
+    controllerAs: 'homeController'
 
   })
-   .service('User', UserService)
-   .filter('Square', SquareFilter)
   .name;
