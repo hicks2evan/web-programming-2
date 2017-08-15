@@ -1,16 +1,12 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
 import routing from './userDetail.routes';
-import User from '../main/main.component';
+import User from '../../components/userService/user.service';
 
 export class UserDetailController {
    /*@ngInject*/
-  constructor($http, $routeParams) {
-    this.$http = $http;
+  constructor($routeParams) {
     this.$routeParams = $routeParams;
-  }
-
-  $onInit() {
     this.user = User.getUserById(this.$routeParams.id);
   }
 }
@@ -23,4 +19,7 @@ export default angular.module('comp3705App.userDetail', [ngRoute])
     controllerAs: 'userDetailController'
 
   })
+   .config(['$qProvider', function($qProvider) {
+     $qProvider.errorOnUnhandledRejections(false);
+   }])
   .name;

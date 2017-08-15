@@ -3,7 +3,7 @@
 export default function routes($routeProvider) {
   'ngInject';
 
-  $routeProvider.when('/', {
-    template: '<main></main>'
+  $routeProvider.when('/api', {
+    template: '<api></api>'
   });
 }

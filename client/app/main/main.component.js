@@ -1,20 +1,20 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
-import routing from './home.routes';
+import routing from './main.routes';
 
-export class HomeController {
+export class MainController {
    /*@ngInject*/
   constructor() {
-
+    this.var = "test";
   }
 }
 
-export default angular.module('comp3705App.home', [ngRoute])
+export default angular.module('comp3705App.main', [ngRoute])
   .config(routing)
-  .component('home', {
-    template: require('./home.html'),
-    controller: HomeController,
-    controllerAs: 'homeController'
+  .component('main', {
+    template: require('./main.html'),
+    controller: MainController,
+    controllerAs: 'mainController'
 
   })
   .name;

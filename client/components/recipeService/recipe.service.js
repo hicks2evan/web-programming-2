@@ -1,28 +1,35 @@
 'use strict';
 
-export function UserService($resource) {
+export function RecipeService($resource) {
   'ngInject';
-  var User = {
-    getAllUsers() {
-      return $resource('/api/users/').query().$promise;
+  var Recipe = {
+    getAllRecipes() {
+      return $resource('/api/recipes/').query().$promise;
     },
-    getUserById(userId) {
-      return $resource('/api/users/:id').get({id: userId}).$promise;
+    getRecipeById(recipeId) {
+      return $resource('/api/users/:id').get({id: recipeId}).$promise;
     },
-    updateUser(user) {
-      let updateResource = $resource('/api/users/:id', null,
+    updateRecipe(recipe) {
+      let updateResource = $resource('/api/recipes/:id', null,
         {
           update: { method: 'PUT' }
         });
-      return updateResource.update({ id: user._id }, user);
+      return updateResource.update({ id: recipe._id }, recipe);
     },
-    createUser(user) {
-      let updateResource = $resource('/api/users/', null,
+    createRecipe(recipe) {
+      let updateResource = $resource('/api/recipes/', null,
         {
           create: { method: 'POST' }
         });
-      return updateResource.create(user);
+      return updateResource.create(recipe);
+    },
+    deleteRecipe(recipe) {
+      let updateResource = $resource('/api/recipes/:id', null,
+        {
+          delete: { method: 'DELETE' }
+        });
+      return updateResource.delete({ id: recipe._id });
     },
   };
-  return User;
+  return Recipe;
 }

@@ -23,6 +23,13 @@ export function UserService($resource) {
         });
       return updateResource.create(user);
     },
+    deleteUser(user) {
+      let updateResource = $resource('/api/users/:id', null,
+        {
+          delete: { method: 'DELETE' }
+        });
+      return updateResource.delete({ id: user._id });
+    },
   };
   return User;
 }

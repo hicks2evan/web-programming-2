@@ -2,9 +2,9 @@
 
 import angular from 'angular';
 import {
-  UserService
+  RecipeService
 } from './recipe.service';
 
-export default angular.module('comp3705App.user', [])
-  .factory('User', UserService)
+export default angular.module('comp3705App.recipe', [])
+  .factory('User', RecipeService)
   .name;

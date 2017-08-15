@@ -2,7 +2,7 @@
 
 import angular from 'angular';
 import {
-  UserService
+  ReviewService
 } from './review.service';
 
 export default angular.module('comp3705App.user', [])
