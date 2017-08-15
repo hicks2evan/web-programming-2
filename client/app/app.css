@@ -43,5 +43,8 @@
 
 /* Component styles are injected through gulp */
 /* inject:css */
+@import 'about/about.css';
+@import 'api/api.css';
 @import 'main/main.css';
+@import 'ui/ui.css';
 /* endinject */

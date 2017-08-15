@@ -1,19 +1,17 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
 import routing from './recipeDetail.routes';
-import Recipe from '../../components/recipeService/recipe.service';
 
 export class RecipeDetailController {
    /*@ngInject*/
-  constructor($routeParams) {
-    this.something = Recipe.getRecipeById('59912b2fbd3e8d4bd3eac74a');
+  constructor($routeParams, Recipe) {
     this.$routeParams = $routeParams;
     this.setData();
   }
 
   setData() {
-    //var id = this.$routeParams.id;
-    //this.recipe = this.Recipe.getRecipeById(id);
+    var id = this.$routeParams.id;
+    this.recipe = this.Recipe.getRecipeById(id);
   }
 }
 
