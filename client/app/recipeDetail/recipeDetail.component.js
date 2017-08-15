@@ -6,6 +6,7 @@ export class RecipeDetailController {
    /*@ngInject*/
   constructor($routeParams, Recipe) {
     this.$routeParams = $routeParams;
+    this.Recipe = Recipe;
     this.setData();
   }
 
@@ -16,7 +17,9 @@ export class RecipeDetailController {
 }
 
 export default angular.module('comp3705App.recipeDetail', [ngRoute])
-   .config(routing)
+   .config(routing, ['$qProvider', function($qProvider) {
+     $qProvider.errorOnUnhandledRejections(false);
+   }])
    .component('recipeDetail', {
      template: require('./recipeDetail.html'),
      controller: RecipeDetailController,
