@@ -5,6 +5,6 @@ import {
   ReviewService
 } from './review.service';
 
-export default angular.module('comp3705App.user', [])
-  .factory('User', UserService)
+export default angular.module('comp3705App.review', [])
+  .factory('Review', ReviewService)
   .name;

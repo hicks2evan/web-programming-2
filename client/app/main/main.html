@@ -2,7 +2,13 @@
   <div class="row">
     <div class="col-lg-12">
        <h1 class="page-header">Home</h1>
-       <p>{{mainController.var}}</p>
+       <div class="col-md-4" ng-repeat="recipe in mainController.recipes">
+          <a href="/recipeDetail/{{recipe._id}}"><div class="jumbotron">
+             <h2>{{recipe.name}}</h2>
+             <img class="img-thumbnail" src="{{recipe.image}}">
+             <p>{{recipe.description}}</p>
+         </div></a>
+       </div>
     </div>
   </div>
 </div>

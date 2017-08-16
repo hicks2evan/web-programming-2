@@ -6,5 +6,5 @@ import {
 } from './recipe.service';
 
 export default angular.module('comp3705App.recipe', [])
-  .factory('User', RecipeService)
+  .factory('Recipe', RecipeService)
   .name;

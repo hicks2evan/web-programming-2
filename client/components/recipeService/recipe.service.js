@@ -7,7 +7,11 @@ export function RecipeService($resource) {
       return $resource('/api/recipes/').query().$promise;
     },
     getRecipeById(recipeId) {
-      return $resource('/api/users/:id').get({id: recipeId}).$promise;
+      let findResource = $resource('/api/recipes/:id', null,
+        {
+          find: { method: 'GET' }
+        });
+      return findResource.find({ id: recipeId }).$promise;
     },
     updateRecipe(recipe) {
       let updateResource = $resource('/api/recipes/:id', null,
@@ -17,18 +21,18 @@ export function RecipeService($resource) {
       return updateResource.update({ id: recipe._id }, recipe);
     },
     createRecipe(recipe) {
-      let updateResource = $resource('/api/recipes/', null,
+      let createResource = $resource('/api/recipes/', null,
         {
           create: { method: 'POST' }
         });
-      return updateResource.create(recipe);
+      return createResource.create(recipe);
     },
     deleteRecipe(recipe) {
-      let updateResource = $resource('/api/recipes/:id', null,
+      let deleteResource = $resource('/api/recipes/:id', null,
         {
           delete: { method: 'DELETE' }
         });
-      return updateResource.delete({ id: recipe._id });
+      return deleteResource.delete({ id: recipe._id });
     },
   };
   return Recipe;

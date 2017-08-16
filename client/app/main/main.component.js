@@ -4,8 +4,19 @@ import routing from './main.routes';
 
 export class MainController {
    /*@ngInject*/
-  constructor() {
-    this.var = "test";
+  constructor(Recipe) {
+    this.Recipe = Recipe;
+    this.getData();
+  }
+
+  getData() {
+    this.Recipe.getAllRecipes()
+        .then(response => {
+          this.recipes = response;
+        })
+        .catch(error => {
+          console.error(error);
+        });
   }
 }
 

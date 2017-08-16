@@ -1,28 +1,39 @@
 'use strict';
 
-export function UserService($resource) {
+export function ReviewService($resource) {
   'ngInject';
-  var User = {
-    getAllUsers() {
-      return $resource('/api/users/').query().$promise;
+  var Review = {
+    getAllReviewsByRecipe(recipeId) {
+      return $resource('/api/recipes/:id/reviews').query({id: recipeId}).$promise;
     },
-    getUserById(userId) {
-      return $resource('/api/users/:id').get({id: userId}).$promise;
+    getReviewById(recipeId, reviewId) {
+      let findResource = $resource('/api/recipes/:ida/reviews/:idb', null,
+        {
+          find: { method: 'GET' }
+        });
+      return findResource.find({ ida: recipeId, idb: reviewId}).$promise;
     },
-    updateUser(user) {
-      let updateResource = $resource('/api/users/:id', null,
+    updateReview(recipeId, review) {
+      let updateResource = $resource('/api/recipes/:ida/reviews/:idb', null,
         {
           update: { method: 'PUT' }
         });
-      return updateResource.update({ id: user._id }, user);
+      return updateResource.update({ ida: recipeId, idb: review._id }, review);
     },
-    createUser(user) {
-      let updateResource = $resource('/api/users/', null,
+    createReview(recipeId, review) {
+      let createResource = $resource('/api/recipes/:id/reviews', null,
         {
           create: { method: 'POST' }
         });
-      return updateResource.create(user);
+      return createResource.create({id: recipeId}, review);
+    },
+    deleteReview(recipeId, review) {
+      let deleteResource = $resource('/api/recipes/:ida/reviews/:idb', null,
+        {
+          delete: { method: 'DELETE' }
+        });
+      return deleteResource.delete({ ida: recipeId, idb: review._id });
     },
   };
-  return User;
+  return Review;
 }
