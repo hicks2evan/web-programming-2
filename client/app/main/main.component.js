@@ -1,6 +1,8 @@
 import angular from 'angular';
 const ngRoute = require('angular-route');
 import routing from './main.routes';
+const uiBootstrap = require('angular-ui-bootstrap');
+import user from '../../components/userService/user.module';
 
 export class MainController {
    /*@ngInject*/
@@ -38,6 +40,10 @@ export class MainController {
     this.random();
   }
 
+  $onInit() {
+
+  }
+
   setData() {
     this.values = ['first', 'second', 'third'];
     this.valueToSquare = 4;
@@ -53,23 +59,23 @@ export class MainController {
          });
   }
 
-  updateUser(user) {
+  updateUser(aUser) {
      //console.log(user);
     this.$uibModal.open({
       template: require('../../components/updateUserModal/updateUserModal.html'),
       controller: 'updateUserModalController as updateUserModalController',
       resolve: {
-        user: () => user
+        user: () => aUser
       }
     });
   }
 
-  createUser(user) {
+  createUser(aUser) {
     this.$uibModal.open({
       template: require('../../components/createUserModal/createUserModal.html'),
       controller: 'createUserModalController as createUserModalController',
       resolve: {
-        user: () => user
+        user: () => aUser
       }
     });
   }
@@ -82,8 +88,8 @@ export function SquareFilter() {
   return squareFunction;
 }
 
-export default angular.module('comp3705App.main', [ngRoute])
-  .config(routing)
+export default angular.module('comp3705App.main', [ngRoute, uiBootstrap, user])
+   .config(routing)
   .component('main', {
     template: require('./main.html'),
     controller: MainController,
