@@ -1,11 +1,12 @@
 import angular from 'angular';
 
-export class CreateUserModalController {
+export class CreateReviewModalController {
    /*@ngInject*/
-  constructor($uibModalInstance, User, user) {
-    this.User = User;
+  constructor($uibModalInstance, Review, recipe, review) {
+    this.Review = Review;
     this.$uibModalInstance = $uibModalInstance;
-    this.user = user;
+    this.review = review;
+    this.recipe = recipe;
   }
 
   cancel() {
@@ -13,15 +14,15 @@ export class CreateUserModalController {
   }
 
   submitForm() {
-    //console.log("something");
-    this.User.createUser(this.user);
+    this.Review.createReview(this.recipe._id, this.review);
     this.$uibModalInstance.dismiss('submit');
   }
+
 }
 
 
-export default angular.module('comp3705App.createUserModal', [])
-   .controller('createUserModalController', CreateUserModalController)
+export default angular.module('comp3705App.createReviewModal', [])
+   .controller('createReviewModalController', CreateReviewModalController)
    .config(['$qProvider', function($qProvider) {
      $qProvider.errorOnUnhandledRejections(false);
    }])

@@ -40,6 +40,10 @@
   padding: 0.2em 0;
 }
 
+.review {
+   height: 200px;
+}
+
 
 /* Component styles are injected through gulp */
 /* inject:css */

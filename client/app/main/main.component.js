@@ -4,9 +4,10 @@ import routing from './main.routes';
 
 export class MainController {
    /*@ngInject*/
-  constructor(Recipe) {
+  constructor(Recipe, $uibModal) {
     this.Recipe = Recipe;
     this.getData();
+    this.$uibModal = $uibModal;
   }
 
   getData() {
@@ -17,6 +18,35 @@ export class MainController {
         .catch(error => {
           console.error(error);
         });
+  }
+
+  createRecipe(recipe) {
+    this.$uibModal.open({
+      template: require('../../components/createRecipeModal/createRecipeModal.html'),
+      controller: 'createRecipeModalController as createRecipeModalController',
+      resolve: {
+        recipe() {
+          return recipe;
+        }
+      }
+    });
+  }
+
+  deleteRecipe(recipe) {
+    this.Recipe.deleteRecipe(recipe);
+    this.getData();
+  }
+
+  updateRecipe(recipe) {
+    this.$uibModal.open({
+      template: require('../../components/updateRecipeModal/updateRecipeModal.html'),
+      controller: 'updateRecipeModalController as updateRecipeModalController',
+      resolve: {
+        recipe() {
+          return recipe;
+        }
+      }
+    });
   }
 }
 

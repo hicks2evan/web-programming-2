@@ -1,36 +1,58 @@
 <div class="modal-content">
-   <form id="createUser" name="createUser" role="form" class="form-horizontal">
+   <form id="createRecipe" name="createRecipe" role="form" class="form-horizontal">
       <div class="modal-header">
-         <button type="button" ng-click="createUserModalController.cancel()" class="close"><span
+         <button type="button" ng-click="createRecipeModalController.cancel()" class="close"><span
             aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-         <h4 id="myModalLabel" class="modal-title">Create New User</h4>
+         <h4 id="myModalLabel" class="modal-title">Write a new recipe</h4>
       </div>
       <div class="modal-body">
-         <div role="alert" ng-show="createUserModalController.formError" class="alert alert-danger">{{ createUserModalController.formError }}</div>
-         <div role="alert" ng-show="createUserModalController.formInfo" class="alert alert-info">{{ createUserModalController.formInfo }}</div>
+         <div role="alert" ng-show="createRecipeModalController.formError" class="alert alert-danger">{{ createRecipeModalController.formError }}</div>
+         <div role="alert" ng-show="createRecipeModalController.formInfo" class="alert alert-info">{{ createRecipeModalController.formInfo }}</div>
          <div class="form-group">
-            <div class="col-xs-10 col-sm-10">
-               <label for="firstName" class="col-xs-2 col-sm-2 control-label">First Name</label>
-               <input id="firstName" name="firstName" required="required" ng-model="createUserModalController.user.name.firstName" class="form-control"/>
-               <label for="lastName" class="col-xs-2 col-sm-2 control-label">Last Name</label>
-               <input id="lastName" name="lastName" required="required" ng-model="createUserModalController.user.name.lastName" class="form-control"/>
-               <label for="age" class="col-xs-2 col-sm-2 control-label">Age</label>
-               <input id="age" name="age" required="required" ng-model="createUserModalController.user.age" class="form-control"/>
-               <label for="addressLine1" class="col-xs-2 col-sm-2 control-label">Address Line 1</label>
-               <input id="addressLine1" name="addressLine1" required="required" ng-model="createUserModalController.user.address.addressLine1" class="form-control"/>
-               <label for="city" class="col-xs-2 col-sm-2 control-label">City</label>
-               <input id="city" name="city" required="required" ng-model="createUserModalController.user.address.city" class="form-control"/>
-               <label for="state" class="col-xs-2 col-sm-2 control-label">State</label>
-               <input id="state" name="state" required="required" ng-model="createUserModalController.user.address.state" class="form-control"/>
-               <label for="zip" class="col-xs-2 col-sm-2 control-label">Zip</label>
-               <input id="zip" name="zip" required="required" ng-model="createUserModalController.user.address.zip" class="form-control"/>
+            <div class="row">
+               <label for="name" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">Title</label>
+               <input class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="name" name="name" required="required" ng-model="createRecipeModalController.recipe.name" class="form-control"/>
+            </div>
+            <div class="row">
+               <label for="prepTime" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">Prep Time</label>
+               <input class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="prepTime" name="prepTime" required="required" ng-model="createRecipeModalController.recipe.prepTime" class="form-control"/>
+            </div>
+            <div class="row">
+               <label for="cookTime" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">Cook Time</label>
+               <input class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="cookTime" name="cookTime" required="required" ng-model="createRecipeModalController.recipe.cookTime" class="form-control"/>
+            </div>
+            <div class="row">
+               <label for="description" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">Description</label>
+               <textarea class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="description" name="description" required="required" ng-model="createRecipeModalController.recipe.description" class="form-control"/>
+            </div>
+            <div class="row">
+               <label for="img" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">Image Url</label>
+               <input class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="img" name="img" required="required" ng-model="createRecipeModalController.recipe.image" class="form-control"/>
+            </div>
+
+            <div class="row">
+               <label for="directions" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">Directions (new line seperated)</label>
+               <textarea class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="directions" name="directions" ng-model="createRecipeModalController.recipe.directions" ng-list="&#10;" ng-trim="false"></textarea>
+            </div>
+
+            <div class="row">
+               <pre class="col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">{{ createRecipeModalController.recipe.directions | json }}</pre>
+            </div>
+            <div class="panel col-lg-10 col-md-10 col-sm-10 col-xs-10">
+               <label>Ingredients:</label>
+               <div class="row" ng-repeat="ingredient in createRecipeModalController.ingredients track by $index">
+                  <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 control-label">Ingredient {{$index + 1}}</label><input class="col-xs-4 col-sm-4 col-md-4 col-lg-4" type="text" ng-model="createRecipeModalController.ingredients[$index].name">
+                  <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Amount</label><input class="col-xs-2 col-sm-2 col-md-2 col-lg-2" type="text" ng-model="createRecipeModalController.ingredients[$index].amount">
+                  <button ng-click="createRecipeModalController.removeIngredient($index)" class="btn btn-danger col-xs-1 col-sm-1 col-md-1 col-lg-1">-</button>
+               </div>
+               <button class="btn btn-default" ng-click="createRecipeModalController.addIngredient()">+</button>
             </div>
          </div>
       </div>
       <div class="modal-footer">
-         <button ng-click="createUserModalController.cancel()" type="button" class="btn btn-default">
+         <button ng-click="createRecipeModalController.cancel()" type="button" class="btn btn-default">
             Cancel</button>
-         <button type="submit" class="btn btn-primary" ng-click="createUserModalController.submitForm()">Create User</button>
+         <button type="submit" class="btn btn-primary" ng-click="createRecipeModalController.submitForm()">Create Recipe</button>
       </div>
    </form>
 </div>

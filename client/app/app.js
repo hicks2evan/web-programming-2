@@ -16,11 +16,10 @@ import {
 
 import main from './main/main.component';
 import about from './about/about.component';
-import api from './api/api.component';
 import ui from './ui/ui.component';
 import user from '../components/userService/user.module';
 import recipe from '../components/recipeService/recipe.module';
-//import review from '../components/reviewService/review.module';
+import review from '../components/reviewService/review.module';
 import userDetail from './userDetail/userDetail.component';
 import recipeDetail from './recipeDetail/recipeDetail.component';
 import constants from './app.constants';
@@ -34,7 +33,7 @@ import createReviewModal from '../components/createReviewModal/createReviewModal
 
 import './app.css';
 
-angular.module('comp3705App', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap, user, recipe, main, about, api, ui, recipeDetail, userDetail, constants, util, createUserModal, updateUserModal, createRecipeModal, updateRecipeModal, createReviewModal, updateReviewModal,
+angular.module('comp3705App', [ngCookies, ngResource, ngSanitize, ngRoute, uiBootstrap, user, recipe, review, main, about, ui, recipeDetail, userDetail, constants, util, createUserModal, updateUserModal, createRecipeModal, updateRecipeModal, createReviewModal, updateReviewModal,
 ])
   .config(routeConfig);
 

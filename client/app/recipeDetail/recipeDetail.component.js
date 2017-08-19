@@ -4,11 +4,26 @@ import routing from './recipeDetail.routes';
 
 export class RecipeDetailController {
    /*@ngInject*/
-  constructor($routeParams, Recipe, User) {
+  constructor($routeParams, Recipe, Review, User, $uibModal) {
     this.$routeParams = $routeParams;
     this.Recipe = Recipe;
+    this.Review = Review;
     this.User = User;
+    this.$uibModal = $uibModal;
     this.setData();
+
+    this.ratingStates = [
+        {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+        {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
+        {stateOn: 'glyphicon-heart', stateOff: 'glyphicon-ban-circle'},
+        {stateOn: 'glyphicon-heart'},
+        {stateOff: 'glyphicon-off'}
+    ];
+  }
+
+  hoveringOver(value) {
+    this.overStar = value;
+    this.percent = 100 * (value / this.max);
   }
 
   setData() {
@@ -26,7 +41,6 @@ export class RecipeDetailController {
   setUserData(Service) {
     var c = 0;
     this.recipe.reviews.forEach(function(review) {
-      console.log(review.user);
       Service.getUserById(review.user)
            .then(response => {
              review.user = response;
@@ -35,6 +49,41 @@ export class RecipeDetailController {
              console.error(error);
            });
       c++;
+    });
+  }
+
+  createReview(recipe, review) {
+    this.$uibModal.open({
+      template: require('../../components/createReviewModal/createReviewModal.html'),
+      controller: 'createReviewModalController as createReviewModalController',
+      resolve: {
+        review() {
+          return review;
+        },
+        recipe() {
+          return recipe;
+        }
+      }
+    });
+  }
+
+  deleteReview(recipe, review) {
+    this.Review.deleteReview(recipe._id, review);
+    this.setData();
+  }
+
+  updateReview(recipe, review) {
+    this.$uibModal.open({
+      template: require('../../components/updateReviewModal/updateReviewModal.html'),
+      controller: 'updateReviewModalController as updateReviewModalController',
+      resolve: {
+        review() {
+          return review;
+        },
+        recipe() {
+          return recipe;
+        }
+      }
     });
   }
 }

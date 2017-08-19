@@ -15,11 +15,14 @@
           <li>{{direction}}</li>
        </ul>
        <h2>Reviews:</h2>
+       <button type="button" class="btn btn-primary" ng-click="recipeDetailController.createReview(recipeDetailController.recipe, review)"><i class="fa fa-pencil"></i> Write Review</button>
        <div class= "col-lg-12" ng-repeat="review in recipeDetailController.recipe.reviews">
-          <div class="">
+          <div class="jumbotron review">
             <strong>{{review.user.name.firstName + " " + review.user.name.lastName + ": "}}</strong>
             <p>"{{review.description}}"</p>
-             <p>{{review.rating}}</p>
+             <span uib-rating ng-model="review.rating" max="5" read-only="true" on-hover="recipeDetailController.hoveringOver(value)" on-leave="recipeDetailController.overStar = null"></span>
+             <button ng-click="recipeDetailController.deleteReview(recipeDetailController.recipe, review)" type="button" class="btn btn-danger pull-right"><i class="fa fa-trash"></i></button>
+             <button ng-click="recipeDetailController.updateReview(recipeDetailController.recipe, review)" type="button" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i></button>
           </div>
        </div>
     </div>
